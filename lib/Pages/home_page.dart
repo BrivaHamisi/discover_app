@@ -8,6 +8,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomepageState extends State<HomePage> {
+  List<String> _locations = ['Nairobi', 'Mombasa', 'Tunis', 'Kisumu'];
+  int _activeLocation =1;
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -17,18 +21,18 @@ class _HomepageState extends State<HomePage> {
         bottom: true,
         minimum: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.05, 0, MediaQuery.of(context).size.width * 0.05, 0),
 
-        child: _mainColmn(),)
+        child: _mainColmn(context),)
     );
   }
 
-  Widget  _mainColmn(){
+  Widget  _mainColmn(BuildContext _context){
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -52,8 +56,42 @@ class _HomepageState extends State<HomePage> {
                 color: Colors.black,
               ),
             ],
-          )
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(_context).size.height *0.05),
+            child: _locationBar(_context),)
         ]
       );
+  }
+
+  Widget _locationBar(BuildContext context){
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.05,
+      decoration: BoxDecoration(color: Color.fromRGBO(69, 69,69, 1),
+      borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: _locations.map((l){
+          bool _isActive = _locations[_activeLocation] == l ? true : false;
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+            Text(l, style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+            _isActive ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.redAccent,
+                ),
+              height: 5,
+              width: 40,
+            ) : Container(),
+          ],);
+        }).toList(),
+      ),
+    );
   }
 }
