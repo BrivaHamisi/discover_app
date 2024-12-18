@@ -114,72 +114,109 @@ class _HomepageState extends State<HomePage> {
           itemCount: articles.length,
           itemBuilder: (context, index) {
             return Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(_context).size.height * 0.05),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                    child: Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(_context).size.height * 0.05),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
                   height: MediaQuery.of(_context).size.height * 0.30,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(articles[index].image)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black38,
-                            spreadRadius: 2,
-                            blurRadius: 20,
-                            offset: Offset(0, 6),
-                          )
-                        ]
-                  ),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(articles[index].image)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black38,
+                          spreadRadius: 2,
+                          blurRadius: 20,
+                          offset: Offset(0, 6),
+                        )
+                      ]),
                   child: _articleInfoColumn(_context, index),
                 ),
-                ));
+              ),
+            );
           }),
     );
   }
 
-  Widget _articleInfoColumn(BuildContext _context, int _index){
+  Widget _articleInfoColumn(BuildContext _context, int _index) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Padding(padding: EdgeInsets.fromLTRB(10, 10, 30, 0), child: _authorInfoRow(_context, _index))
+        Padding(
+            padding: EdgeInsets.fromLTRB(10, 10, 30, 0),
+            child: _authorInfoRow(_context, _index))
       ],
     );
   }
 
-  Widget _authorInfoRow(BuildContext _context, int _index){
+  Widget _authorInfoRow(BuildContext _context, int _index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(children: [
-          Container(
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(image: DecorationImage(image: NetworkImage('https://i.pravatar.cc/300'),
-          ),
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.white, width: 2,
-          )
-          ),
+        Row(
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage('https://i.pravatar.cc/300'),
+                  ),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  )),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 5),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    articles[_index].author,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '3 Hours Ago',
+                    style: TextStyle(
+                        color: Colors.white54,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
-        Padding(padding: EdgeInsets.only(left: 5),
-        child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(articles[_index].author, style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          Text('3 Hours Ago', style: TextStyle(color: Colors.white54, fontSize: 13, fontWeight: FontWeight.w300),
-          )
-        ],
+        Column(
+          children: [
+            Icon(
+              Icons.favorite,
+              color: Colors.red,
+              size: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Icon(
+                Icons.bookmark,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ],
         ),
-        )
-        ],)
       ],
     );
   }
