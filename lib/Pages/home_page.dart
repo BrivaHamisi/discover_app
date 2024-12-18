@@ -79,7 +79,7 @@ class _HomepageState extends State<HomePage> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-            Text(l, style: TextStyle(fontSize: 16, color: Colors.white),
+            Text(l, style: TextStyle(fontSize: 16, color: _isActive ? Colors.white : Colors.white54, fontFamily: 'Montserrat' ),
             ),
             _isActive ? Container(
               decoration: BoxDecoration(
