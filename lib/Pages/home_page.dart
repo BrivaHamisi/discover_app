@@ -113,28 +113,40 @@ class _HomepageState extends State<HomePage> {
       child: ListView.builder(
           itemCount: articles.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(_context).size.height * 0.05),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: MediaQuery.of(_context).size.height * 0.30,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(articles[index].image)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          spreadRadius: 2,
-                          blurRadius: 20,
-                          offset: Offset(0, 6),
-                        )
-                      ]),
-                  child: _articleInfoColumn(_context, index),
+            return Stack(
+              // overflow: Overflow.visible,
+              clipBehavior: Clip.none,  // Replace overflow: Overflow.visible
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(_context).size.height * 0.05),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      height: MediaQuery.of(_context).size.height * 0.30,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(articles[index].image)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black38,
+                              spreadRadius: 2,
+                              blurRadius: 20,
+                              offset: Offset(0, 6),
+                            )
+                          ]),
+                      child: _articleInfoColumn(_context, index),
+                    ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  bottom: 30,
+                  left: MediaQuery.of(_context).size.width * 0.10,
+                  child: _socialInfoContainer(_context, index
+                  ),
+                  ),
+              ],
             );
           }),
     );
@@ -150,7 +162,8 @@ class _HomepageState extends State<HomePage> {
             padding: EdgeInsets.fromLTRB(10, 10, 30, 0),
             child: _authorInfoRow(_context, _index)),
         Padding(
-          padding: EdgeInsets.fromLTRB(30, MediaQuery.of(_context).size.height * 0.05, 30, 0),
+          padding: EdgeInsets.fromLTRB(
+              30, MediaQuery.of(_context).size.height * 0.05, 30, 0),
           child: _detailinfoRow(_context, _index),
         ),
       ],
@@ -241,34 +254,83 @@ class _HomepageState extends State<HomePage> {
             size: 30,
           ),
         ),
-        Padding(padding: EdgeInsets.only(left: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: MediaQuery.of(_context).size.width * 0.50,
-              child: Text(
-              articles[_index].title,
-              maxLines: 3,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            ),
-            Text(
-              articles[_index].location,
-              style: TextStyle(
-                  color: Colors.white54,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300),
-            )
-          ],
-        ),
+        Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: MediaQuery.of(_context).size.width * 0.50,
+                child: Text(
+                  articles[_index].title,
+                  maxLines: 3,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text(
+                articles[_index].location,
+                style: TextStyle(
+                    color: Colors.white54,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w300),
+              )
+            ],
+          ),
         ),
       ],
+    );
+  }
+
+  Widget _socialInfoContainer(
+    BuildContext _context,
+    int _index,
+  ) {
+    return Container(
+      height: MediaQuery.of(_context).size.height * 0.08,
+      width: MediaQuery.of(_context).size.width * 0.70,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+            Icon(Icons.favorite_border, color: Colors.redAccent,),
+          Text(
+            articles[_index].likes.toString(), 
+            style: TextStyle(color: Colors.redAccent),
+          )
+          ],
+          ),
+           Row(
+            children: [
+            Icon(Icons.mode_comment, color: Colors.grey,),
+          Text(
+            articles[_index].comments.toString(), 
+            style: TextStyle(color: Colors.grey),
+          )
+          ],
+          ),
+           Row(
+            children: [
+            Icon(Icons.share, color: Colors.grey,),
+          Text(
+            articles[_index].shares.toString(), 
+            style: TextStyle(color: Colors.grey),
+          )
+          ],
+          ),
+        ],
+      ),
     );
   }
 }
