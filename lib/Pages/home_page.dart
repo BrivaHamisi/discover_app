@@ -148,7 +148,11 @@ class _HomepageState extends State<HomePage> {
       children: [
         Padding(
             padding: EdgeInsets.fromLTRB(10, 10, 30, 0),
-            child: _authorInfoRow(_context, _index))
+            child: _authorInfoRow(_context, _index)),
+        Padding(
+          padding: EdgeInsets.fromLTRB(30, MediaQuery.of(_context).size.height * 0.05, 30, 0),
+          child: _detailinfoRow(_context, _index),
+        ),
       ],
     );
   }
@@ -216,6 +220,53 @@ class _HomepageState extends State<HomePage> {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _detailinfoRow(BuildContext _context, int _index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.white,
+          shape: CircleBorder(),
+          child: Icon(
+            Icons.play_arrow,
+            color: Colors.redAccent,
+            size: 30,
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(left: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: MediaQuery.of(_context).size.width * 0.50,
+              child: Text(
+              articles[_index].title,
+              maxLines: 3,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            ),
+            Text(
+              articles[_index].location,
+              style: TextStyle(
+                  color: Colors.white54,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w300),
+            )
+          ],
+        ),
         ),
       ],
     );
